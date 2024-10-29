@@ -14,7 +14,7 @@
  */
 public class Magic8BallDemo
 {
-    private final static String USAGE =
+    private final static String Magic8BallDemo =
                 "Usage: java Magic8BallDemo client <server name> <server port>\n"
               + "       java Magic8BallDemo server <server port>\n"
               + "    where <server port> is in the range 1024-49151.";
@@ -22,7 +22,7 @@ public class Magic8BallDemo
     public static void main(String[] args)
     {
         if (args.length < 2) {
-            System.err.println(USAGE);
+            System.err.println(Magic8BallDemo);
         } else if (args.length == 2
                 && args[0].equalsIgnoreCase("server"))
         {
@@ -32,10 +32,10 @@ public class Magic8BallDemo
                 server.start();
             } catch (NumberFormatException e) {
                 System.err.println(args[1] + " cannot be parsed as an int.");
-                System.err.println(USAGE);
+                System.err.println(Magic8BallDemo);
             } catch (Exception e) {
                 System.err.println(e.getMessage());
-                System.err.println(USAGE);
+                System.err.println(Magic8BallDemo);
             }
         } else if (args.length == 3
                 && args[0].equalsIgnoreCase("client"))
@@ -47,13 +47,13 @@ public class Magic8BallDemo
                 client.start();
             } catch (NumberFormatException e) {
                 System.err.println(args[2] + " cannot be parsed as an int.");
-                System.err.println(USAGE);
+                System.err.println(Magic8BallDemo);
             } catch (Exception e) {
                 System.err.println(e.getMessage());
-                System.err.println(USAGE);
+                System.err.println(Magic8BallDemo);
             }
         } else {
-            System.err.println(USAGE);
+            System.err.println(Magic8BallDemo);
         }
     }
 }

@@ -79,7 +79,7 @@ public class Server
                     toClient.println(GOOD_BYE);
                     System.out.println("Client terminated connection.");
                 }   // Streams, client socket closed by try-with-resources.
-            }
+            } // Ends while true loop
         } // ServerSocket closed by try-with-resources.
     }
 }
