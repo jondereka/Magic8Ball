@@ -49,34 +49,37 @@ public class Server
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Server starting on port " + port + "."
                     + " Ctrl+C to exit.");
-            try (
-                    // Wait for connection.
-                    Socket clientSocket = serverSocket.accept();
-                    // Build buffered reader on client socket.
-                    BufferedReader fromClient =
-                            new BufferedReader(
-                                    new InputStreamReader(clientSocket.getInputStream()));
-                    // Build PrintWriter on client socket.
-                    PrintWriter toClient = new PrintWriter(
-                            new OutputStreamWriter(clientSocket.getOutputStream()), true)
-            )
-            {
-                // Connection made. Greet client.
-                toClient.println(GREETING);
-                // Create a Magic8Ball object
-                Magic8Ball magic8Ball = new Magic8Ball();
-                // Converse with client.
-                String inString = fromClient.readLine();
-                while (inString != null && !inString.isEmpty()) {
-                    // Get magic8BallAnswer and send to the client
-                    String magic8BallAnswer = magic8Ball.getAnswer();
-                    toClient.println(magic8BallAnswer);
-                    inString = fromClient.readLine();
+            // Keeps server running indefinitely
+            while (true) { // Where to put while true loop
+                try (
+                        // Wait for connection.
+                        Socket clientSocket = serverSocket.accept();
+                        // Build buffered reader on client socket.
+                        BufferedReader fromClient =
+                                new BufferedReader(
+                                        new InputStreamReader(clientSocket.getInputStream()));
+                        // Build PrintWriter on client socket.
+                        PrintWriter toClient = new PrintWriter(
+                                new OutputStreamWriter(clientSocket.getOutputStream()), true)
+                ) {
+                    // Connection made. Greet client.
+                    toClient.println(GREETING);
+                    // Create a Magic8Ball object
+                    Magic8Ball magic8Ball = new Magic8Ball();
+                    // Converse with client.
+                    String inString = fromClient.readLine();
+                    while (inString != null && !inString.isEmpty()) {
+                        // Get magic8BallAnswer and send to the client
+                        String magic8BallAnswer = magic8Ball.getAnswer();
+                        toClient.println(magic8BallAnswer);
+                        inString = fromClient.readLine();
 
-                }
-                toClient.println(GOOD_BYE);
-                System.out.println("Client terminated connection.");
-            }   // Streams, client socket closed by try-with-resources.
+                    }
+
+                    toClient.println(GOOD_BYE);
+                    System.out.println("Client terminated connection.");
+                }   // Streams, client socket closed by try-with-resources.
+            }
         } // ServerSocket closed by try-with-resources.
     }
 }
