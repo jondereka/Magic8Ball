@@ -14,9 +14,9 @@ public class Server
 {
     // Strings sent to client.
     private static final String GREETING =
-            "Welcome to the echo server. Press just ENTER to end session.";
+            "The Magic 8 Ball says: Please enter a yes/no question.";
     private static final String GOOD_BYE =
-            "Ending echo server session.";
+            "The Magic 8 Ball says: Good bye ... Live long, and prosper.";
 
     // Instance variables.
     private final int port;
@@ -53,25 +53,26 @@ public class Server
                     // Wait for connection.
                     Socket clientSocket = serverSocket.accept();
                     // Build buffered reader on client socket.
-                    InputStream inStream = clientSocket.getInputStream();
-                    InputStreamReader inStreamReader =
-                            new InputStreamReader(inStream);
                     BufferedReader fromClient =
-                            new BufferedReader(inStreamReader);
+                            new BufferedReader(
+                                    new InputStreamReader(clientSocket.getInputStream()));
                     // Build PrintWriter on client socket.
-                    OutputStream outStream = clientSocket.getOutputStream();
-                    PrintWriter toClient =
-                            new PrintWriter(outStream, true)
+                    PrintWriter toClient = new PrintWriter(
+                            new OutputStreamWriter(clientSocket.getOutputStream()), true)
             )
             {
                 // Connection made. Greet client.
                 toClient.println(GREETING);
+                // Create a Magic8Ball object
+                Magic8Ball magic8Ball = new Magic8Ball();
                 // Converse with client.
                 String inString = fromClient.readLine();
                 while (inString != null && !inString.isEmpty()) {
-                    System.out.println(inString);
-                    toClient.println(inString);
+                    // Get magic8BallAnswer and send to the client
+                    String magic8BallAnswer = magic8Ball.getAnswer();
+                    toClient.println(magic8BallAnswer);
                     inString = fromClient.readLine();
+
                 }
                 toClient.println(GOOD_BYE);
                 System.out.println("Client terminated connection.");

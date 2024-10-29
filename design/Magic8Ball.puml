@@ -3,7 +3,6 @@
 
 'Make public/private/etc show up as character rather than colored circle.
 skinparam classAttributeIconSize 0
-
 hide empty members
 
 class Magic8Ball {
